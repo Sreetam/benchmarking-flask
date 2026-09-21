@@ -1,0 +1,12 @@
+version: 0.2
+# Packages the source tree as a tar.gz. No dependency install here — LEO's
+# backend deploy (deploy_backend, mode="python") installs requirements.txt
+# on the prod server itself after extracting this artifact.
+phases:
+  build:
+    commands:
+      - tar -czf /tmp/artifact-$(date -u +%Y%m%d%H%M%S).tar.gz --exclude=.git -C "$CODEBUILD_SRC_DIR" .
+artifacts:
+  base-directory: /tmp
+  files:
+    - "*.tar.gz"
